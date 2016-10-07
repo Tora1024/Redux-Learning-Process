@@ -16,7 +16,6 @@ class BookDetail extends Component {
 			</div>	
 		);	
 	}
-	
 }
 
 function mapStateToProps(state) {
