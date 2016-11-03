@@ -1,11 +1,33 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { fetchPost } from '../actions/index';
 
 class PostsShow extends Component {
+	componentWillMount() {
+		this.props.fetchPost(this.props.params.id);
+	}
 	render() {
-		return (
-			<div>Show Post {this.props.params.id}</div>
-		);
+		const { post } = this.props;
+
+		if (!post) {
+			return(
+				<div>Loading...</div>
+			);
+		} else {
+			return (
+				<div>
+					<h2>Showing Post Number: {this.props.params.id}</h2>
+					<h3>{post.title}</h3>
+					<h6>Categories: {post.categories}</h6>
+					<p>{post.content}</p>
+				</div>
+			);
+		}
 	}
 }
 
-export default PostsShow;
+function mapStateToProps(state) {
+	return ({ post: state.posts.post });
+}
+
+export default connect (mapStateToProps, { fetchPost })(PostsShow);
